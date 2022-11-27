@@ -1,11 +1,19 @@
+import genericpath
+from types import GenericAlias
+from typing import Generic
 from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+import snippets
 from snippets.models import Snippet
 from snippets.serializers import SnippetSerializer
+from django.contrib.auth.models import User
+from snippets.serializers import UserSerializer
+
+
 
 
 @api_view(['GET', 'POST'])
@@ -50,3 +58,12 @@ def snippet_detail(request, pk, format=None):
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class UserList(Generic.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(GenericAlias.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    
