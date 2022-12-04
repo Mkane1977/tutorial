@@ -24,6 +24,7 @@ class SnippetSerializer(serializers.ModelSerializer):
         instance.style = validated_data.get('style', instance.style)
         instance.save()
         return instance
+        owner = serializers.ReadOnlyField(source='owner.username')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -33,4 +34,3 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'snippets']
 
-        
